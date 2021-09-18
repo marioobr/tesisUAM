@@ -51,10 +51,11 @@ app.get("/",(req, res) => {
 
 app.post("/api/test", (req, res) => {
   console.log(config.private_key);
-  const message = req.body.message;
-
-
-  client.messages
+  const message = req.body.message; 
+  detectIntent(message)
+    .then((intent) => {
+      console.log(intent);
+      client.messages
         .create({
           from: "whatsapp:+14155238886",
           body: message,
@@ -67,17 +68,13 @@ app.post("/api/test", (req, res) => {
             msg: "Message correctly sent",
           });
         });
-  // detectIntent(message)
-  //   .then((intent) => {
-  //     console.log(intent);
-      
-  //   })
-  //   .catch((err) => {
-  //     res.status(501).json({
-  //       error: 501,
-  //       msg: err,
-  //     });
-  //   });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        error: 501,
+        msg: err,
+      });
+    });
 });
 
 app.listen(config.port, () => {
