@@ -44,10 +44,12 @@ app.post("/api/test", (req, res) => {
   detectIntent(message)
     .then((intent) => {
       console.log(intent);
+      const result = intent.queryResult;
+      const intentName = result.intent.displayName;
       client.messages
         .create({
           from: "whatsapp:+14155238886",
-          body: intent,
+          body: intentName,
           to: "whatsapp:+50583731668",
         })
         .then((message) => {
