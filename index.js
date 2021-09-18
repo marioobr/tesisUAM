@@ -49,6 +49,11 @@ async function detectIntent(query) {
   return responses[0];
 }
 
+app.get("/",(req, res) => {
+    res.send('Todo gucci')
+})
+
+
 app.post("/api/test", (req, res) => {
   console.log(private_key);
   const message = req.body.message;
