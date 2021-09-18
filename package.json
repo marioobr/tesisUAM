@@ -4,8 +4,8 @@
   "description": "Tesis UAM",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index",
-    "start": "node index"
+    "dev": "DEBUG=app:* nodemon index",
+    "start": "NODE_ENV=production node index"
   },
   "author": "Hector Morales",
   "license": "ISC",

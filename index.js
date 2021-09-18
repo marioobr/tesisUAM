@@ -1,25 +1,20 @@
-//Obtener variables de entorno
-require("dotenv").config();
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const project_id = process.env.PROJECT_ID;
-const private_key = process.env.PRIVATE_KEY.replace(/\\n/gm, '\n');
-const client_email = process.env.CLIENT_EMAIL;
+const { config } = require('./config/index');
 const dialogflow = require("@google-cloud/dialogflow");
 const uuid = require("uuid");
 
 const express = require("express");
-const { pick } = require("lodash");
-const client = require("twilio")(accountSid, authToken);
+const cors = require('cors');
+const client = require("twilio")(config.accountSid, config.authToken);
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-const port = 5000;
+
 //Configuracion de dialogflow
 const configdf = {
   credentials: {
-    private_key,
-    client_email,
+    private_key:  config.private_key,
+    client_email: config.client_email,
   },
 };
 
@@ -30,7 +25,7 @@ const sessionClient = new dialogflow.SessionsClient(configdf);
 async function detectIntent(query) {
   // The path to identify the agent that owns the created intent.
   const sessionPath = sessionClient.projectAgentSessionPath(
-    project_id,
+    config.project_id,
     "123456789"
   );
 
@@ -55,13 +50,11 @@ app.get("/",(req, res) => {
 
 
 app.post("/api/test", (req, res) => {
-  console.log(private_key);
+  console.log(config.private_key);
   const message = req.body.message;
 
-  detectIntent(message)
-    .then((intent) => {
-      console.log(intent);
-      client.messages
+
+  client.messages
         .create({
           from: "whatsapp:+14155238886",
           body: message,
@@ -74,15 +67,19 @@ app.post("/api/test", (req, res) => {
             msg: "Message correctly sent",
           });
         });
-    })
-    .catch((err) => {
-      res.status(501).json({
-        error: 501,
-        msg: err,
-      });
-    });
+  // detectIntent(message)
+  //   .then((intent) => {
+  //     console.log(intent);
+      
+  //   })
+  //   .catch((err) => {
+  //     res.status(501).json({
+  //       error: 501,
+  //       msg: err,
+  //     });
+  //   });
 });
 
-app.listen(port, () => {
-  console.log("Escuchando el puerto: " + port);
+app.listen(config.port, () => {
+  console.log("Escuchando el puerto: " + config.port);
 });
