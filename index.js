@@ -47,7 +47,7 @@ app.post("/api/test", (req, res) => {
       client.messages
         .create({
           from: "whatsapp:+14155238886",
-          body: message,
+          body: intent,
           to: "whatsapp:+50583731668",
         })
         .then((message) => {
