@@ -1,7 +1,6 @@
 const { config } = require('./config/index');
-const dialogflow = require("@google-cloud/dialogflow");
 const uuid = require("uuid");
-
+const sessionClient = require('./lib/DialogFlow')
 const express = require("express");
 const cors = require('cors');
 const client = require("twilio")(config.accountSid, config.authToken);
@@ -10,23 +9,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//Configuracion de dialogflow
-const configdf = {
-  credentials: {
-    private_key:  config.private_key,
-    client_email: config.client_email,
-  },
-};
-
-
-
-const sessionClient = new dialogflow.SessionsClient(configdf);
-
 async function detectIntent(query) {
   // The path to identify the agent that owns the created intent.
+  const uniqueID = uuid.v4()
+  
   const sessionPath = sessionClient.projectAgentSessionPath(
     config.project_id,
-    "123456789"
+    uniqueID
   );
 
   // The text query request.
@@ -50,7 +39,7 @@ app.get("/",(req, res) => {
 
 
 app.post("/api/test", (req, res) => {
-  console.log(config.private_key);
+  // console.log(config.private_key);
   const message = req.body.message; 
   detectIntent(message)
     .then((intent) => {
