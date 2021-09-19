@@ -3,7 +3,6 @@ const uuid = require("uuid");
 const sessionClient = require("./lib/DialogFlow");
 const express = require("express");
 const cors = require("cors");
-const client = require("twilio")(config.accountSid, config.authToken);
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const app = express();
@@ -47,7 +46,7 @@ app.post("/api/inbound-message", (req, res) => {
       const result = intent.queryResult;
       const intentName = result.intent.displayName;
 
-      if (intentName === 'Default Fallback Intent') {
+      if (intentName === "Default Fallback Intent") {
         twiml.message(`Bienvenido al servicio de rastreo de encomiendas de Transportes Castillo.
         Seleccione la opción que sea de sus interes:
         1️⃣ CDM
@@ -55,18 +54,25 @@ app.post("/api/inbound-message", (req, res) => {
         3️⃣ HDTP
         4️⃣ ALC
         5️⃣ ALV`);
-      } else if (intentName === 'laconcha') {
-        twiml.message('Mauricio es una bestia.')
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } else if (intentName === "laconcha") {
+        twiml.message("Mauricio es una bestia.");
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
       } else {
-        twiml.message('Rey, lo que mandaste no apunta a ningún intent, ubicate.')
+        twiml.message(
+          "Rey, lo que mandaste no apunta a ningún intent, ubicate."
+        );
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
       }
     })
     .catch((err) => {
-      twiml.message('La cagamos prix, algo salio mal, intenta al rato.')
+      twiml.message("La cagamos prix, algo salio mal, intenta al rato.");
+      res.writeHead(200, { "Content-Type": "text/xml" });
+      res.end(twiml.toString());
     });
-
-  res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(twiml.toString());
 });
 
 app.listen(config.port, () => {
