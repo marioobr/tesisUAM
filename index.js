@@ -41,8 +41,8 @@ app.get("/", (req, res) => {
 app.post("/api/inbound-message", (req, res) => {
   const twiml = new MessagingResponse();
 
-  const message = req.body.Body;
-  twiml.message(message);
+  const message = req.body;
+  twiml.message(message.toString());
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(twiml.toString());
   // detectIntent(message)
