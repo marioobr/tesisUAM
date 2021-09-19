@@ -5,10 +5,12 @@ const express = require("express");
 const cors = require("cors");
 const client = require("twilio")(config.accountSid, config.authToken);
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const bodyParser = require('body-parser')
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 async function detectIntent(query) {
   // The path to identify the agent that owns the created intent.
@@ -41,7 +43,7 @@ app.get("/", (req, res) => {
 app.post("/api/inbound-message", (req, res) => {
   const twiml = new MessagingResponse();
 
-  const message = JSON.stringify(req.params.Body);
+  const message = req.body.Body;
   twiml.message(message);
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(twiml.toString());
