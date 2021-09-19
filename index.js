@@ -41,41 +41,32 @@ app.get("/", (req, res) => {
 app.post("/api/inbound-message", (req, res) => {
   const twiml = new MessagingResponse();
 
-  twiml.message("Comeme la pinga!");
-
-  res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(twiml.toString());
-});
-
-app.post("/api/test", (req, res) => {
-  // console.log(config.private_key);
-  const message = req.body.message;
+  const message = req.body.Body;
   detectIntent(message)
     .then((intent) => {
-      console.log(intent);
       const result = intent.queryResult;
       const intentName = result.intent.displayName;
 
-      client.messages
-        .create({
-          from: "whatsapp:+14155238886",
-          body: message,
-          to: "whatsapp:+50583731668",
-        })
-        .then((message) => {
-          console.log(message.sid);
-          res.status(200).json({
-            error: 0,
-            msg: "Message correctly sent",
-          });
-        });
+      if (intentName === 'Default Fallback Intent') {
+        twiml.message(`Bienvenido al servicio de rastreo de encomiendas de Transportes Castillo.
+        Seleccione la opción que sea de sus interes:
+        1️⃣ CDM
+        2️⃣ VVV
+        3️⃣ HDTP
+        4️⃣ ALC
+        5️⃣ ALV`);
+      } else if (intentName === 'laconcha') {
+        twiml.message('Mauricio es una bestia.')
+      } else {
+        twiml.message('Rey, lo que mandaste no apunta a ningún intent, ubicate.')
+      }
     })
     .catch((err) => {
-      res.status(501).json({
-        error: 501,
-        msg: err,
-      });
+      twiml.message('La cagamos prix, algo salio mal, intenta al rato.')
     });
+
+  res.writeHead(200, { "Content-Type": "text/xml" });
+  res.end(twiml.toString());
 });
 
 app.listen(config.port, () => {
