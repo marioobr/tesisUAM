@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 app.post("/api/inbound-message", (req, res) => {
   const twiml = new MessagingResponse();
 
-  const message = JSON.stringify(req);
+  const message = JSON.stringify(req.params.Body);
   twiml.message(message);
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(twiml.toString());
