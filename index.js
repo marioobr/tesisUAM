@@ -44,41 +44,39 @@ app.post("/api/inbound-message", (req, res) => {
   const twiml = new MessagingResponse();
 
   const message = req.body.Body;
-  twiml.message(message);
-  res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(twiml.toString());
-  // detectIntent(message)
-  //   .then((intent) => {
-  //     const result = intent.queryResult;
-  //     const intentName = result.intent.displayName;
+  
+  detectIntent(message)
+    .then((intent) => {
+      const result = intent.queryResult;
+      const intentName = result.intent.displayName;
 
-  //     if (intentName === "Default Fallback Intent") {
-  //       twiml.message(`Bienvenido al servicio de rastreo de encomiendas de Transportes Castillo.
-  //       Seleccione la opción que sea de sus interes:
-  //       1️⃣ CDM
-  //       2️⃣ VVV
-  //       3️⃣ HDTP
-  //       4️⃣ ALC
-  //       5️⃣ ALV`);
-  //       res.writeHead(200, { "Content-Type": "text/xml" });
-  //       res.end(twiml.toString());
-  //     } else if (intentName === "laconcha") {
-  //       twiml.message("Mauricio es una bestia.");
-  //       res.writeHead(200, { "Content-Type": "text/xml" });
-  //       res.end(twiml.toString());
-  //     } else {
-  //       twiml.message(
-  //         "Rey, lo que mandaste no apunta a ningún intent, ubicate."
-  //       );
-  //       res.writeHead(200, { "Content-Type": "text/xml" });
-  //       res.end(twiml.toString());
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     twiml.message("La cagamos prix, algo salio mal, intenta al rato.");
-  //     res.writeHead(200, { "Content-Type": "text/xml" });
-  //     res.end(twiml.toString());
-  //   });
+      if (intentName === "Default Fallback Intent") {
+        twiml.message(`Bienvenido al servicio de rastreo de encomiendas de Transportes Castillo.
+        Seleccione la opción que sea de sus interes:
+        1️⃣ CDM
+        2️⃣ VVV
+        3️⃣ HDTP
+        4️⃣ ALC
+        5️⃣ ALV`);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } else if (intentName === "laconcha") {
+        twiml.message("Mauricio es una bestia.");
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } else {
+        twiml.message(
+          "Rey, lo que mandaste no apunta a ningún intent, ubicate."
+        );
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      }
+    })
+    .catch((err) => {
+      twiml.message("La cagamos prix, algo salio mal, intenta al rato.");
+      res.writeHead(200, { "Content-Type": "text/xml" });
+      res.end(twiml.toString());
+    });
 });
 
 app.post('/api/test', (req, res) => {
