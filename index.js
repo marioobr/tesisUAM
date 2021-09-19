@@ -1,9 +1,10 @@
-const { config } = require('./config/index');
+const { config } = require("./config/index");
 const uuid = require("uuid");
-const sessionClient = require('./lib/DialogFlow')
+const sessionClient = require("./lib/DialogFlow");
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const client = require("twilio")(config.accountSid, config.authToken);
+const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const app = express();
 app.use(cors());
@@ -11,8 +12,8 @@ app.use(express.json());
 
 async function detectIntent(query) {
   // The path to identify the agent that owns the created intent.
-  const uniqueID = uuid.v4()
-  
+  const uniqueID = uuid.v4();
+
   const sessionPath = sessionClient.projectAgentSessionPath(
     config.project_id,
     uniqueID
@@ -33,23 +34,32 @@ async function detectIntent(query) {
   return responses[0];
 }
 
-app.get("/",(req, res) => {
-    res.send('Todo gucci')
-})
+app.get("/", (req, res) => {
+  res.send("Todo gucci");
+});
 
+app.post("/api/inbound-message", (req, res) => {
+  const twiml = new MessagingResponse();
+
+  twiml.message("Comeme la pinga!");
+
+  res.writeHead(200, { "Content-Type": "text/xml" });
+  res.end(twiml.toString());
+});
 
 app.post("/api/test", (req, res) => {
   // console.log(config.private_key);
-  const message = req.body.message; 
+  const message = req.body.message;
   detectIntent(message)
     .then((intent) => {
       console.log(intent);
       const result = intent.queryResult;
       const intentName = result.intent.displayName;
+
       client.messages
         .create({
           from: "whatsapp:+14155238886",
-          body: intentName,
+          body: message,
           to: "whatsapp:+50583731668",
         })
         .then((message) => {
