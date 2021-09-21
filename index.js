@@ -66,7 +66,7 @@ app.post("/api/inbound-message", (req, res) => {
       const intentName = result.intent.displayName;
 
       if (intentName === "Saludo Inicial") {
-        twiml.message(`Bienvenido ${customerName} al servicio de rastreo de encomiendas de Transportes Castillo.
+        twiml.message(`Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
         Seleccione la opción que sea de sus interes:
         1️⃣ Consultar estado de su encomienda
         2️⃣ Consultar historial de encomiendas`);
@@ -78,10 +78,38 @@ app.post("/api/inbound-message", (req, res) => {
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } else if (intentName === "Historia de encomienda") {
-        twiml.message("Su historial de encomienda es: ");
+        twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      } else {
+      }
+      else if (intentName === "Registrar paquete categoria") {
+        twiml.message(`Seleccionar la categoria del producto a registrar:
+        1️⃣No Fragil
+        2️⃣Fragil
+        3️⃣Muy fragil
+        `);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      }else if (intentName === "Registrar paquete nombre") {
+        twiml.message(`Seleccionar la categoria del producto a registrar:
+        1️⃣No Fragil
+        2️⃣Fragil
+        3️⃣Muy fragil
+        `);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      }
+       else if (intentName === "tipo categoria") {
+        twiml.message(`La categoria seleccionada fue: `);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } 
+      else if (intentName === "tipo nombre") {
+        twiml.message(`El nombre del producto seleccionado es: `);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } 
+      else {
         twiml.message(
           "Rey, lo que mandaste no apunta a ningún intent, ubicate."
         );
