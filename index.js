@@ -81,17 +81,13 @@ app.post("/api/inbound-message", (req, res) => {
         twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }
-      else if (intentName === "Registrar Paquete Categoria") {
-        twiml.message(`Seleccionar la categoria del producto a registrar:
+      }else if (intentName === "Registrar paquete nombre") {
+        twiml.message(`Escribi el nombre del producto que vas a registrar.
+
+        Por favor selecciona la categoria del producto a registrar:
         1️⃣No Fragil
         2️⃣Fragil
         3️⃣Muy fragil
-        `);
-        res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
-      }else if (intentName === "Registrar paquete nombre") {
-        twiml.message(`Escribi el nombre del producto que vas a registrar
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
