@@ -72,7 +72,7 @@ app.post("/api/inbound-message", (req, res) => {
       }
     })
     .catch((err) => {
-      twiml.message("La cagamos prix, algo salio mal, intenta al rato.");
+      twiml.message("Me estás cagando papi?");
       res.writeHead(200, { "Content-Type": "text/xml" });
       res.end(twiml.toString());
     });
