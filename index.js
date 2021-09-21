@@ -82,7 +82,7 @@ app.post("/api/inbound-message", (req, res) => {
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
-      else if (intentName === "Registrar paquete categoria") {
+      else if (intentName === "Registrar Paquete Categoria") {
         twiml.message(`Seleccionar la categoria del producto a registrar:
         1️⃣No Fragil
         2️⃣Fragil
@@ -111,7 +111,7 @@ app.post("/api/inbound-message", (req, res) => {
       } 
       else {
         twiml.message(
-          "Rey, lo que mandaste no apunta a ningún intent, ubicate."
+          "Parece que te equivocaste! Escribi una de las opciones validas para que podamas seguis interactuando"
         );
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
