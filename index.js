@@ -100,7 +100,9 @@ app.post("/api/inbound-message", (req, res) => {
         res.end(twiml.toString());
       }
        else if (intentName === "tipo categoria") {
-        twiml.message(`La categoria seleccionada fue: `);
+        twiml.message(`La categoria seleccionada fue: 
+        Por favor escribi a continuacion el nombre del producto que queres ingresar.
+        `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
