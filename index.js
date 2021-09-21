@@ -91,17 +91,13 @@ app.post("/api/inbound-message", (req, res) => {
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }else if (intentName === "Registrar paquete nombre") {
-        twiml.message(`Seleccionar la categoria del producto a registrar:
-        1️⃣No Fragil
-        2️⃣Fragil
-        3️⃣Muy fragil
+        twiml.message(`Escribi el nombre del producto que vas a registrar
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
        else if (intentName === "tipo categoria") {
         twiml.message(`La categoria seleccionada fue: 
-        Por favor escribi a continuacion el nombre del producto que queres ingresar.
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
@@ -113,7 +109,7 @@ app.post("/api/inbound-message", (req, res) => {
       } 
       else {
         twiml.message(
-          "Parece que te equivocaste! Escribi una de las opciones validas para que podamas seguis interactuando"
+          "Parece que te equivocaste! Escribi una de las opciones validas para que podamos seguir interactuando"
         );
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
