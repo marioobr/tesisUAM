@@ -66,10 +66,11 @@ app.post("/api/inbound-message", (req, res) => {
       const intentName = result.intent.displayName;
 
       if (intentName === "Saludo Inicial") {
-        twiml.message(`Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
+        twiml.message(
+       `Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
         Seleccione la opción que sea de sus interes:
-        1️⃣ Consultar estado de su encomienda
-        2️⃣ Consultar historial de encomiendas`);
+        0️⃣  Consultar estado de su encomienda
+        1️⃣  Consultar historial de encomiendas`);
         //Lineas requeridas despues de cada respuesta
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
@@ -84,10 +85,10 @@ app.post("/api/inbound-message", (req, res) => {
       }else if (intentName === "Registrar paquete nombre") {
         twiml.message(`Escribi el nombre del producto que vas a registrar.
 
-        Por favor selecciona la categoria del producto a registrar:
-        1️⃣No Fragil
-        2️⃣Fragil
-        3️⃣Muy fragil
+        Por favor escriba selecciona la categoria del producto a registrar:
+        No Fragil
+        Fragil
+        Muy fragil
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
@@ -112,7 +113,7 @@ app.post("/api/inbound-message", (req, res) => {
       }
     })
     .catch((err) => {
-      twiml.message("Me estás cagando papi?");
+      twiml.message("Mensaje totalmente fuera del scope");
       res.writeHead(200, { "Content-Type": "text/xml" });
       res.end(twiml.toString());
     });
