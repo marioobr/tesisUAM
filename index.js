@@ -86,11 +86,13 @@ Seleccione la opción que sea de sus interes:
       }else if (intentName === "Registrar paquete nombre") {
         twiml.message(`Escribi el nombre del producto que vas a registrar.
 
-        Por favor escriba selecciona la categoria del producto a registrar:
-        No Fragil
-        Fragil
-        Muy fragil
+        
         `);
+
+        // Por favor escriba selecciona la categoria del producto a registrar:
+        // No Fragil
+        // Fragil
+        // Muy fragil
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
