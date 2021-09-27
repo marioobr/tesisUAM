@@ -68,9 +68,10 @@ app.post("/api/inbound-message", (req, res) => {
       if (intentName === "Saludo Inicial") {
         twiml.message(
        `Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
-    Seleccione la opción que sea de sus interes:
-    0️⃣ Consultar estado de su encomienda
-    1️⃣ Consultar historial de encomiendas`);
+       
+Seleccione la opción que sea de sus interes:
+0️⃣ Consultar estado de su encomienda
+1️⃣ Consultar historial de encomiendas`);
         //Lineas requeridas despues de cada respuesta
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
