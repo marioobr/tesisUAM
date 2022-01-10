@@ -97,7 +97,7 @@ Escribi el nombre del producto que vas a registrar.
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
-       else if (intentName === "tipo categoria") {
+      else if (intentName === "tipo categoria") {
         twiml.message(`La categoria seleccionada fue: 
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
