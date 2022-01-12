@@ -81,7 +81,7 @@ Escribi la opción que sea de tu interes:
         twiml.message("El estado de su encomienda es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      } else if (intentName === "Historia de encomienda") {
+      } else if (intentName === "Historial de encomienda") {
         twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
