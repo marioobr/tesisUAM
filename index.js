@@ -65,6 +65,8 @@ app.post("/api/inbound-message", (req, res) => {
       const result = intent.queryResult;
       const intentName = result.intent.displayName;
 
+      console.log('intentName', intentName);
+
       if (intentName === "Saludo Inicial") {
         twiml.message(
        `Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
