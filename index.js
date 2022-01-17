@@ -2,7 +2,7 @@
 const { config } = require("./config/index");
 //Declaracion de librerias que se estan utilizando
 const uuid = require("uuid");
-const admin = require("firebase-admin");
+//const admin = require("firebase-admin");
 const sessionClient = require("./lib/DialogFlow");
 const express = require("express");
 const cors = require("cors");
