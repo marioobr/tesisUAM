@@ -87,6 +87,9 @@ app.post("/api/inbound-message", (req, res) => {
 Escribi la opción que sea de tu interes:
 0️⃣ Consultar estado de su encomienda
 1️⃣ Consultar historial de encomiendas`);
+
+// crear()
+
         //Lineas requeridas despues de cada respuesta
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
