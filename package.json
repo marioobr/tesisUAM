@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "DEBUG=app:* nodemon index",
-    "start": "NODE_ENV=production node index"
+    "start": "NODE_ENV=production node index",
+    "inicar": "nodemon app.js"
   },
   "author": "Hector Morales",
   "license": "ISC",
