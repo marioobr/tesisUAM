@@ -8,6 +8,19 @@ const express = require("express");
 const cors = require("cors");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose')
+
+const url = 'mongodb://localhost/encomiendas'
+
+mongoose.connect(url, {
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useFindAndModify: false,
+    // useCreateIndex: true
+
+})
+.then(()=> console.log('Conectado a Mongo'))
+.catch((e)=> console.log('El error de conexion es: ' + e))
 
 //Configuracion del servidor
 const app = express();
