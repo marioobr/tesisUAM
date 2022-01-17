@@ -141,3 +141,5 @@ Escribi el nombre del producto que vas a registrar.
 app.listen(config.port, () => {
   console.log("Escuchando el puerto: " + config.port);
 });
+
+// NODE_ENV=production node index
