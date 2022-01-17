@@ -10,7 +10,7 @@ const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 
-const url = 'mongodb://localhost/encomiendas'
+const url = 'mongodb://0.0.0.0:27017/encomiendas'
 
 mongoose.connect(url, {
     // useNewUrlParser: true,
