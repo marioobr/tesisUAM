@@ -82,7 +82,7 @@ app.post("/api/inbound-message", (req, res) => {
   detectIntent(message)
     .then((intent) => {
       const result = intent.queryResult;
-      console.log('Query result: ', result.parameters.fields)
+      console.log('Query result: ', result.parameters.fields['name'].stringValue)
       console.log('Intent completo: ', intent)
       const intentName = result.intent.displayName;
 
