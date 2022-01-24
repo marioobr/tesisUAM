@@ -7,9 +7,9 @@ const sessionClient = require("./lib/DialogFlow");
 const express = require("express");
 const cors = require("cors");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
-const bodyParser = require("body-parser");
+const bodyParser = require("body-par ser");
 const mongoose = require('mongoose')
-const model = require('./lib/model')
+// const model = require('./lib/model')
 const {crear,eliminar,actualizar,mostrar} = require('./lib/controllers')
 
 
