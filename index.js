@@ -91,7 +91,7 @@ app.post("/api/inbound-message", (req, res) => {
 
       const result = intent.queryResult;
       // console.log('Query result: ', result.parameters.fields)
-      console.log('Body del message ', req.body.Body)
+      console.log('Body del message ', req.body)
       const intentName = result.intent.displayName;
 
       console.log('intentName', intentName);
