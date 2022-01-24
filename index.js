@@ -135,6 +135,11 @@ Escribi la opción que sea de tu interes:
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
+      else if (intentName === "Ingreso de informacion paquete") {
+        twiml.message("La informacion registrada es: ");
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      }
       else if (intentName === "tipo categoria") {
         twiml.message(`La categoria seleccionada fue: 
         `);
