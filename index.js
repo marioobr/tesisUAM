@@ -9,10 +9,22 @@ const cors = require("cors");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
+const model = require('./lib/model')
+const controller = require('./lib/controllers')
 
-const url = 'mongodb://127.0.0.1/encomiendas'
 
-mongoose.connect(url, {
+
+
+
+//Configuracion del servidor
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const url = 'mongodb+srv://tuntu99:hector9908@cluster0.afz7x.mongodb.net/encomiendas?retryWrites=true&w=majority'
+
+mongoose.connect(url,  {
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
     // useFindAndModify: false,
@@ -21,12 +33,6 @@ mongoose.connect(url, {
 })
 .then(()=> console.log('Conectado a Mongo'))
 .catch((e)=> console.log('El error de conexion es: ' + e))
-
-//Configuracion del servidor
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 //Inicializacion de firebaseAdmin
 const inicia = admin.initializeApp({
@@ -76,6 +82,8 @@ app.post("/api/inbound-message", (req, res) => {
   detectIntent(message)
     .then((intent) => {
       const result = intent.queryResult;
+      console.log('Query result: ', result)
+      console.log('Intent completo: ', intent)
       const intentName = result.intent.displayName;
 
       console.log('intentName', intentName);
