@@ -111,10 +111,16 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
       }else if (intentName === "Registrar paquete nombre") {
         twiml.message(`
-Escribi el nombre del producto que vas a registrar.
+        Escribi la informacion de la encomienda que vas a registrar.
 
         
         `);
+        // twiml.message(`
+        // La informacion que agregaste es la siguiente:
+        // Nombre: 
+
+        
+        // `);
 
         // Por favor escriba selecciona la categoria del producto a registrar:
         // No Fragil
