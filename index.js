@@ -87,9 +87,11 @@ app.post("/api/inbound-message", (req, res) => {
 
   detectIntent(message)
     .then((intent) => {
+
+
       const result = intent.queryResult;
-      console.log('Query result: ', result.parameters.fields)
-      console.log('Intent completo: ', intent)
+      // console.log('Query result: ', result.parameters.fields)
+      console.log('info de mensaje: ', message)
       const intentName = result.intent.displayName;
 
       console.log('intentName', intentName);
@@ -150,7 +152,7 @@ Escribi la opción que sea de tu interes:
           nombre: mongoName,
           cantidad: mongoCantidad,
           producto: mongoProducto,
-          categoria: mongoCategoria
+          categoria: ''
         }
         
         crear(data)
@@ -159,7 +161,7 @@ Escribi la opción que sea de tu interes:
     nombre del cliente: ${mongoName}
     producto: ${mongoProducto}
     cantidad: ${mongoCantidad}
-    categoria: ${mongoCategoria}
+    
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
@@ -170,8 +172,8 @@ Escribi la opción que sea de tu interes:
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
-      else if (intentName === "tipo nombre") {
-        twiml.message(`El nombre del producto seleccionado es: `);
+      else if (intentName === "Estado") {
+        twiml.message(`Por favor `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
