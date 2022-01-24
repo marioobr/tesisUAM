@@ -114,7 +114,7 @@ Escribi la opción que sea de tu interes:
         twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }else if (intentName === "Reconocer ingreso paquete ") {
+      }else if (intentName === "Reconocer ingreso paquete") {
         // mongoName = result.parameters.fields['name']['stringValue']
         twiml.message(`
         Escribi la informacion de la encomienda que vas a registrar.
