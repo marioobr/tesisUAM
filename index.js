@@ -115,7 +115,7 @@ Escribi la opción que sea de tu interes:
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }else if (intentName === "Reconocer ingreso paquete") {
-        // mongoName = result.parameters.fields['name']['stringValue']
+        
         twiml.message(`
         Escribi la informacion de la encomienda que vas a registrar.
 
@@ -136,7 +136,18 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
       }
       else if (intentName === "Ingreso de informacion paquete") {
-        twiml.message("La informacion registrada es: ");
+
+        mongoName = result.parameters.fields['name']['stringValue']
+        mongoCantidad = result.parameters.fields['number']['numberValue']
+        mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        mongoProducto = result.parameters.fields['producto']['stringValue']
+
+        twiml.message(`La informacion registrada es: 
+      nombre del cliente: ${mongoName}
+      producto: ${mongoProducto}
+      cantidad: ${mongoCantidad}
+      categoria: ${mongoCategoria}
+        `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
