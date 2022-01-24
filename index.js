@@ -10,6 +10,7 @@ const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 const model = require('./lib/model')
+const {crear,eliminar,actualizar,mostrar} = require('./lib/controllers')
 
 
 
@@ -137,11 +138,22 @@ Escribi la opción que sea de tu interes:
       }
       else if (intentName === "Ingreso de informacion paquete") {
 
+        
+
         mongoName = result.parameters.fields['name']['stringValue']
         mongoCantidad = result.parameters.fields['number']['numberValue']
         mongoCategoria = result.parameters.fields['categoria']['stringValue']
         mongoProducto = result.parameters.fields['producto']['stringValue']
         mongoUnidad = result.parameters.fields['unidad']['stringValue']
+
+        const data = {
+          nombre: mongoName,
+          cantidad: mongoCantidad,
+          producto: mongoProducto,
+          categoria: mongoCategoria
+        }
+        
+        crear(data)
 
         twiml.message(`La informacion registrada es: 
     nombre del cliente: ${mongoName}
