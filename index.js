@@ -22,17 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// const url = 'mongodb+srv://tuntu99:hector9908@cluster0.afz7x.mongodb.net/encomiendas?retryWrites=true&w=majority'
+const url = 'mongodb+srv://tuntu99:hector9908@cluster0.afz7x.mongodb.net/encomiendas?retryWrites=true&w=majority'
 
-// mongoose.connect(url,  {
-//     // useNewUrlParser: true,
-//     // useUnifiedTopology: true,
-//     // useFindAndModify: false,
-//     // useCreateIndex: true
+mongoose.connect(url,  {
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useFindAndModify: false,
+    // useCreateIndex: true
 
-// })
-// .then(()=> console.log('Conectado a Mongo'))
-// .catch((e)=> console.log('El error de conexion es: ' + e))
+})
+.then(()=> console.log('Conectado a Mongo'))
+.catch((e)=> console.log('El error de conexion es: ' + e))
 
 //Inicializacion de firebaseAdmin
 const inicia = admin.initializeApp({
@@ -83,6 +83,7 @@ app.post("/api/inbound-message", (req, res) => {
   let mongoProducto;
   let mongoCategoria;
   let mongoCantidad;
+  let mongoUnidad;
 
   detectIntent(message)
     .then((intent) => {
@@ -141,12 +142,13 @@ Escribi la opción que sea de tu interes:
         mongoCantidad = result.parameters.fields['number']['numberValue']
         mongoCategoria = result.parameters.fields['categoria']['stringValue']
         mongoProducto = result.parameters.fields['producto']['stringValue']
+        mongoUnidad = result.parameters.fields['unidad']['stringValue']
 
         twiml.message(`La informacion registrada es: 
-      nombre del cliente: ${mongoName}
-      producto: ${mongoProducto}
-      cantidad: ${mongoCantidad}
-      categoria: ${mongoCategoria}
+    nombre del cliente: ${mongoName}
+    producto: ${mongoProducto}
+    cantidad: ${mongoCantidad}
+    categoria: ${mongoCategoria}
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
