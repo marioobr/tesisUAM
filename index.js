@@ -78,11 +78,16 @@ app.post("/api/inbound-message", (req, res) => {
   //Asignar a message el body del request
   const message = req.body.Body;
   const customerName = req.body.ProfileName;
+  //Variables con valores temporales 
+  let mongoName;
+  let mongoProducto;
+  let mongoCategoria;
+  let mongoCantidad;
 
   detectIntent(message)
     .then((intent) => {
       const result = intent.queryResult;
-      console.log('Query result: ', result.parameters.fields['name']['stringValue'])
+      console.log('Query result: ', result.parameters.fields)
       console.log('Intent completo: ', intent)
       const intentName = result.intent.displayName;
 
@@ -109,7 +114,8 @@ Escribi la opción que sea de tu interes:
         twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }else if (intentName === "Registrar paquete nombre") {
+      }else if (intentName === "Reconocer ingreso paquete ") {
+        // mongoName = result.parameters.fields['name']['stringValue']
         twiml.message(`
         Escribi la informacion de la encomienda que vas a registrar.
 
