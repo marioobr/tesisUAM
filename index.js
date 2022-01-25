@@ -84,11 +84,12 @@ app.post("/api/inbound-message", (req, res) => {
   let mongoCategoria;
   let mongoCantidad;
   let mongoUnidad;
+  let mongoEstado;
 
   detectIntent(message)
     .then((intent) => {
 
-
+      const numero = req.body.WaId;
       const result = intent.queryResult;
       // console.log('Query result: ', result.parameters.fields)
       console.log('Body del message ', req.body)
@@ -152,7 +153,8 @@ Escribi la opción que sea de tu interes:
           nombre: mongoName,
           cantidad: mongoCantidad,
           producto: mongoProducto,
-          categoria: ''
+          categoria: '',
+          estado: 0
         }
         
         crear(data)
@@ -173,7 +175,43 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
       } 
       else if (intentName === "Estado") {
-        twiml.message(`Por favor `);
+        twiml.message(`Por favor ingresa el estado del paquete:
+        Pendiente
+        Recibido
+        En proceso
+        Entregado
+        Extraviado
+        
+        
+        `);
+
+        mongoEstado = result.parameters.fields['estado']['stringValue'].toLowerCase()
+
+        
+
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      }  else if (intentName === "Definir Estado") {
+
+        if(mongoEstado === 'pendiente'){
+          mongoEstado = 0
+        }
+        else if(mongoEstado === 'recibido'){
+          mongoEstado = 1
+        }else if(mongoEstado === 'en proceso'){
+          mongoEstado = 2
+        }else if(mongoEstado === 'entregado'){
+          mongoEstado = 3
+        }else if(mongoEstado === 'extraviado'){
+          mongoEstado = 4
+        }
+
+        
+
+
+
+        twiml.message(`El estado de la encomienda con el numero ${numero} es ${mongoEstado}: 
+        `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
