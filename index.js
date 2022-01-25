@@ -121,27 +121,11 @@ Escribi la opción que sea de tu interes:
       }else if (intentName === "Reconocer ingreso paquete") {
         
         twiml.message(`
-        Escribi la informacion de la encomienda que vas a registrar.
-
-        
-        `);
-        // twiml.message(`
-        // La informacion que agregaste es la siguiente:
-        // Nombre: 
-
-        
-        // `);
-
-        // Por favor escriba selecciona la categoria del producto a registrar:
-        // No Fragil
-        // Fragil
-        // Muy fragil
+        Escribi la informacion de la encomienda que vas a registrar.`);     
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
       else if (intentName === "Ingreso de informacion paquete") {
-
-        
 
         mongoName = result.parameters.fields['name']['stringValue']
         mongoCantidad = result.parameters.fields['number']['numberValue']
@@ -154,7 +138,8 @@ Escribi la opción que sea de tu interes:
           cantidad: mongoCantidad,
           producto: mongoProducto,
           categoria: '',
-          estado: 0
+          estado: 0,
+          unidad: mongoUnidad
         }
         
         crear(data)
@@ -176,11 +161,11 @@ Escribi la opción que sea de tu interes:
       } 
       else if (intentName === "Estado") {
         twiml.message(`Por favor ingresa el estado del paquete:
-        Pendiente
-        Recibido
-        En proceso
-        Entregado
-        Extraviado
+      Pendiente
+      Recibido
+      En proceso
+      Entregado
+      Extraviado
         
         
         `);
@@ -206,7 +191,7 @@ Escribi la opción que sea de tu interes:
           mongoEstado = 4
         }
 
-        
+
 
 
 
