@@ -139,7 +139,8 @@ Escribi la opción que sea de tu interes:
           producto: mongoProducto,
           categoria: '',
           estado: 0,
-          unidad: mongoUnidad
+          unidad: mongoUnidad,
+          numero: numero
         }
         
         crear(data)
@@ -148,6 +149,8 @@ Escribi la opción que sea de tu interes:
     nombre del cliente: ${mongoName}
     producto: ${mongoProducto}
     cantidad: ${mongoCantidad}
+    unidad: ${mongoUnidad},
+    numero: ${numero}
     
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
