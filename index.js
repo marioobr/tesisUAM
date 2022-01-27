@@ -85,6 +85,7 @@ app.post("/api/inbound-message", (req, res) => {
   let mongoCantidad;
   let mongoUnidad;
   let mongoEstado;
+  let mongoNumero;
 
   detectIntent(message)
     .then((intent) => {
@@ -120,7 +121,7 @@ Escribi la opción que sea de tu interes:
       }else if (intentName === "Reconocer ingreso paquete") {
         
         twiml.message(`
-        Escribi la informacion de la encomienda que vas a registrar.`);     
+        Escribi la informacion de la encomienda que vas a registrar`);     
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       }
@@ -131,6 +132,7 @@ Escribi la opción que sea de tu interes:
         mongoCategoria = result.parameters.fields['categoria']['stringValue']
         mongoProducto = result.parameters.fields['producto']['stringValue']
         mongoUnidad = result.parameters.fields['unidad']['stringValue']
+        mongoNumero = req.body.WaId;
 
         const data = {
           nombre: mongoName,
@@ -139,7 +141,7 @@ Escribi la opción que sea de tu interes:
           categoria: '',
           estado: 0,
           unidad: mongoUnidad,
-          numero: numero
+          numero: mongoNumero
         }
         
         crear(data)
@@ -149,7 +151,7 @@ Escribi la opción que sea de tu interes:
     producto: ${mongoProducto}
     cantidad: ${mongoCantidad}
     unidad: ${mongoUnidad},
-    numero: ${numero}
+    numero: ${mongoNumero}
     
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
