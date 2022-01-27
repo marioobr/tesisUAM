@@ -150,7 +150,7 @@ Escribi la opción que sea de tu interes:
     nombre del cliente: ${mongoName}
     producto: ${mongoProducto}
     cantidad: ${mongoCantidad}
-    unidad: ${mongoUnidad},
+    unidad: ${mongoUnidad}
     numero: ${mongoNumero}
     
         `);
