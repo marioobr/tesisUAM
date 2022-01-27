@@ -118,24 +118,25 @@ Escribi la opción que sea de tu interes:
         twiml.message("Su historial de encomiendas es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }else if (intentName === "Reconocer ingreso paquete") {
-        
-        twiml.message(`
-        Escribi la informacion de la encomienda que vas a registrar`);     
-        res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
+
       }else if (intentName === "Mostrar encomienda cliente") {
         mongoNumero = req.body.WaId;
         mostraractivo({numero: mongoNumero}).then((encomiendas) => {
-          console.log('Encomiendas', encomiendas)
+          console.log('Encomiendas', encomiendas.Body)
           twiml.message(`
         La informacion de tu encomieneda es la siguiente: `);     
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
 
         })
+
+      }
+      else if (intentName === "Reconocer ingreso paquete") {
         
-        
+        twiml.message(`
+        Escribi la informacion de la encomienda que vas a registrar`);     
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
       }
       else if (intentName === "Ingreso de informacion paquete") {
 
