@@ -10,7 +10,7 @@ const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 // const model = require('./lib/model')
-const {crear,eliminar,actualizar,mostrar} = require('./lib/controllers')
+const {crear,eliminar,actualizar,mostrar, mostraractivo} = require('./lib/controllers')
 
 
 
@@ -124,6 +124,18 @@ Escribi la opción que sea de tu interes:
         Escribi la informacion de la encomienda que vas a registrar`);     
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
+      }else if (intentName === "Mostrar encomienda cliente") {
+        mongoNumero = req.body.WaId;
+        mostraractivo({numero: mongoNumero}).then((encomiendas) => {
+          console.log('Encomiendas', encomiendas)
+          twiml.message(`
+        La informacion de tu encomieneda es la siguiente: `);     
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+
+        })
+        
+        
       }
       else if (intentName === "Ingreso de informacion paquete") {
 
@@ -141,7 +153,7 @@ Escribi la opción que sea de tu interes:
           categoria: '',
           estado: 0,
           unidad: mongoUnidad,
-          numero: mongoNumero
+          numero: mongoNumero 
         }
         
         crear(data)
@@ -194,10 +206,6 @@ Escribi la opción que sea de tu interes:
         }else if(mongoEstado === 'extraviado'){
           mongoEstado = 4
         }
-
-
-
-
 
         twiml.message(`El estado de la encomienda con el numero ${numero} es ${mongoEstado}: 
         `);
