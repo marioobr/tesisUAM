@@ -129,7 +129,7 @@ Escribi la opción que sea de tu interes:
 
         mongoName = result.parameters.fields['name']['stringValue']
         mongoCantidad = result.parameters.fields['number']['numberValue']
-        mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        // mongoCategoria = result.parameters.fields['categoria']['stringValue']
         mongoProducto = result.parameters.fields['producto']['stringValue']
         mongoUnidad = result.parameters.fields['unidad']['stringValue']
         mongoNumero = req.body.WaId;
