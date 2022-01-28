@@ -8,13 +8,15 @@ const express = require("express");
 const cors = require("cors");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 // const model = require('./lib/model')
-const {crear,eliminar,actualizar,mostrar, mostraractivo} = require('./lib/controllers')
-
-
-
-
+const {
+  crear,
+  eliminar,
+  actualizar,
+  mostrar,
+  mostraractivo,
+} = require("./lib/controllers");
 
 //Configuracion del servidor
 const app = express();
@@ -22,17 +24,18 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const url = 'mongodb+srv://tuntu99:hector9908@cluster0.afz7x.mongodb.net/encomiendas?retryWrites=true&w=majority'
+const url =
+  "mongodb+srv://tuntu99:hector9908@cluster0.afz7x.mongodb.net/encomiendas?retryWrites=true&w=majority";
 
-mongoose.connect(url,  {
+mongoose
+  .connect(url, {
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
     // useFindAndModify: false,
     // useCreateIndex: true
-
-})
-.then(()=> console.log('Conectado a Mongo'))
-.catch((e)=> console.log('El error de conexion es: ' + e))
+  })
+  .then(() => console.log("Conectado a Mongo"))
+  .catch((e) => console.log("El error de conexion es: " + e));
 
 //Inicializacion de firebaseAdmin
 const inicia = admin.initializeApp({
@@ -78,7 +81,7 @@ app.post("/api/inbound-message", (req, res) => {
   //Asignar a message el body del request
   const message = req.body.Body;
   const customerName = req.body.ProfileName;
-  //Variables con valores temporales 
+  //Variables con valores temporales
   let mongoName;
   let mongoProducto;
   let mongoCategoria;
@@ -89,23 +92,23 @@ app.post("/api/inbound-message", (req, res) => {
 
   detectIntent(message)
     .then((intent) => {
-
       const numero = req.body.WaId;
       const result = intent.queryResult;
-      console.log('Query Result: ', result.parameters.fields)
+      console.log("Query Result: ", result.parameters.fields);
       const intentName = result.intent.displayName;
 
-      console.log('intentName', intentName);
+      console.log("intentName", intentName);
 
       if (intentName === "Saludo Inicial") {
         twiml.message(
-       `Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
+          `Bienvenido ${customerName} al servicio de rastreo de encomiendas que brinda Transportes Castillo.
        
 Escribi la opción que sea de tu interes:
 0️⃣ Consultar estado de su encomienda
-1️⃣ Consultar historial de encomiendas`);
+1️⃣ Consultar historial de encomiendas`
+        );
 
-// crear()
+        // crear()
 
         //Lineas requeridas despues de cada respuesta
         res.writeHead(200, { "Content-Type": "text/xml" });
@@ -114,23 +117,29 @@ Escribi la opción que sea de tu interes:
         twiml.message("El estado de su encomienda es: ");
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      // } else if (intentName === "Historial de encomienda") {
-      //   twiml.message("Su historial de encomiendas es: ");
-      //   res.writeHead(200, { "Content-Type": "text/xml" });
-      //   res.end(twiml.toString());
-
-       }
-      else if (intentName === "Mostrar encomienda cliente") {
-
+        // } else if (intentName === "Historial de encomienda") {
+        //   twiml.message("Su historial de encomiendas es: ");
+        //   res.writeHead(200, { "Content-Type": "text/xml" });
+        //   res.end(twiml.toString());
+      } else if (intentName === "Mostrar encomienda cliente") {
         mongoNumero = req.body.WaId;
-        mostraractivo({estado: {$lt:2},numero: '50583731668'}).then((encomiendas) => {
-          console.log('Encomiendas', encomiendas)
+        mostraractivo({ estado: { $lt: 2 }, numero: "50583731668" }).then(
+          (encomiendas) => {
+            console.log("Encomiendas", encomiendas);
 
-          var message = '';
+            var message = "";
 
-          encomiendas.forEach((encomienda)=>{
-            const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
-            const msg = `
+            encomiendas.forEach((encomienda) => {
+              const {
+                nombre,
+                cantidad,
+                producto,
+                categoria,
+                numero,
+                estado,
+                unidad,
+              } = encomienda;
+              const msg = `
             Tus encomiendas activas son:
             nombre: ${nombre}
             cantidad: ${cantidad}
@@ -139,26 +148,31 @@ Escribi la opción que sea de tu interes:
             numero: ${numero}
             unidad: ${unidad}
             estado: ${estado}
-            `
-            message += msg
-          })
-          twiml.message(message);     
-        res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
-
-        })
-        
-
-      }
-      else if (intentName === "Mostrar todas encomiendas") {
+            `;
+              message += msg;
+            });
+            twiml.message(message);
+            res.writeHead(200, { "Content-Type": "text/xml" });
+            res.end(twiml.toString());
+          }
+        );
+      } else if (intentName === "Mostrar todas encomiendas") {
         mongoNumero = req.body.WaId;
-        mostraractivo({numero: mongoNumero}).then((encomiendas) => {
-          console.log('Encomiendas', encomiendas)
+        mostraractivo({ numero: mongoNumero }).then((encomiendas) => {
+          console.log("Encomiendas", encomiendas);
 
-          var message = '';
+          var message = "";
 
-          encomiendas.forEach((encomienda)=>{
-            const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
+          encomiendas.forEach((encomienda) => {
+            const {
+              nombre,
+              cantidad,
+              producto,
+              categoria,
+              numero,
+              estado,
+              unidad,
+            } = encomienda;
             const msg = `
             Tu historial de encomiendas es: 
             nombre: ${nombre}
@@ -168,43 +182,37 @@ Escribi la opción que sea de tu interes:
             numero: ${numero}
             unidad: ${unidad}
             estado: ${estado}
-            `
-            message += msg
-          })
-          twiml.message(message);     
-        res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
-
-        })
-
-      }
-      else if (intentName === "Reconocer ingreso paquete") {
-        
+            `;
+            message += msg;
+          });
+          twiml.message(message);
+          res.writeHead(200, { "Content-Type": "text/xml" });
+          res.end(twiml.toString());
+        });
+      } else if (intentName === "Reconocer ingreso paquete") {
         twiml.message(`
-        Escribi la informacion de la encomienda que vas a registrar`);     
+        Escribi la informacion de la encomienda que vas a registrar`);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }
-      else if (intentName === "Ingreso de informacion paquete") {
+      } else if (intentName === "Ingreso de informacion paquete") {
+        mongoName = result.parameters.fields["name"]["stringValue"];
+        mongoCantidad = result.parameters.fields["number"]["numberValue"];
 
-        mongoName = result.parameters.fields['name']['stringValue']
-        mongoCantidad = result.parameters.fields['number']['numberValue']
-      
-        mongoProducto = result.parameters.fields['producto']['stringValue']
-        mongoUnidad = result.parameters.fields['unidad']['stringValue']
+        mongoProducto = result.parameters.fields["producto"]["stringValue"];
+        mongoUnidad = result.parameters.fields["unidad"]["stringValue"];
         mongoNumero = req.body.WaId;
 
         const data = {
           nombre: mongoName,
           cantidad: mongoCantidad,
           producto: mongoProducto,
-          categoria: '',
+          categoria: "",
           estado: 0,
           unidad: mongoUnidad,
-          numero: mongoNumero 
-        }
-        
-        crear(data)
+          numero: mongoNumero,
+        };
+
+        crear(data);
 
         twiml.message(`La informacion registrada es: 
     nombre del cliente: ${mongoName}
@@ -216,27 +224,23 @@ Escribi la opción que sea de tu interes:
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }
-      else if (intentName === "tipo categoria") {
+      } else if (intentName === "tipo categoria") {
         twiml.message(`Escribi una de las siguientes categorias para la encomienda:
         No fragil
         Fragil
         Muy fragil 
         `);
-        mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        mongoCategoria = result.parameters.fields["categoria"]["stringValue"];
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      } 
-      else if (intentName === "Definir categoria") {
-
+      } else if (intentName === "Definir categoria") {
         // mongoCategoria = result.parameters.fields['categoria']['stringValue']
         twiml.message(`La categoria seleccionada para la encomienda ${mongoNumero} es ${mongoCategoria}
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      } 
-        else if (intentName === "Solicitar estado") {
-          twiml.message(`Escribi el estado en el que se encuentra la encomienda de acuerdo a las siguientes opciones:
+      } else if (intentName === "Solicitar estado") {
+        twiml.message(`Escribi el estado en el que se encuentra la encomienda de acuerdo a las siguientes opciones:
           Pendiente
           Recibido
           En proceso
@@ -244,34 +248,27 @@ Escribi la opción que sea de tu interes:
           Entregado
           `);
 
-          mongoEstado = result.parameters.fields['estado']['stringValue']
-          res.writeHead(200, { "Content-Type": "text/xml" });
-          res.end(twiml.toString());
-        } 
-      
-      else if (intentName === "Definir Estado") {
-        
-        
-
-        if(mongoEstado === 'pendiente'){
-          mongoEstado = 0
-        }
-        else if(mongoEstado === 'recibido'){
-          mongoEstado = 1
-        }else if(mongoEstado === 'en proceso'){
-          mongoEstado = 2
-        }else if(mongoEstado === 'entregado'){
-          mongoEstado = 3
-        }else if(mongoEstado === 'extraviado'){
-          mongoEstado = 4
+        mongoEstado = result.parameters.fields["estado"]["stringValue"];
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } else if (intentName === "Definir Estado") {
+        if (mongoEstado === "pendiente") {
+          mongoEstado = 0;
+        } else if (mongoEstado === "recibido") {
+          mongoEstado = 1;
+        } else if (mongoEstado === "en proceso") {
+          mongoEstado = 2;
+        } else if (mongoEstado === "entregado") {
+          mongoEstado = 3;
+        } else if (mongoEstado === "extraviado") {
+          mongoEstado = 4;
         }
 
         twiml.message(`El estado de la encomienda con el numero ${numero} es ${mongoEstado}: 
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      } 
-      else {
+      } else {
         twiml.message(
           "Parece que te equivocaste! Escribi una de las opciones validas para que podamos seguir interactuando"
         );
