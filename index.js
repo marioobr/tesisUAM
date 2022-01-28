@@ -222,35 +222,18 @@ Escribi la opción que sea de tu interes:
         Fragil
         Muy fragil 
         `);
+        mongoCategoria = result.parameters.fields['categoria']['stringValue']
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
       else if (intentName === "Definir categoria") {
 
-        mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        // mongoCategoria = result.parameters.fields['categoria']['stringValue']
         twiml.message(`La categoria seleccionada para la encomienda ${mongoNumero} es ${mongoCategoria}
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
       } 
-      else if (intentName === "Estado") {
-        twiml.message(`Por favor ingresa el estado del paquete:
-      Pendiente
-      Recibido
-      En proceso
-      Entregado
-      Extraviado
-        
-        
-        `);
-
-        mongoEstado = result.parameters.fields['estado']['stringValue'].toLowerCase()
-
-        
-
-        res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
-      }
         else if (intentName === "Solicitar estado") {
           twiml.message(`Escribi el estado en el que se encuentra la encomienda de acuerdo a las siguientes opciones:
           Pendiente
