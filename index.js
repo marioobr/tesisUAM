@@ -188,7 +188,7 @@ Escribi la opción que sea de tu interes:
 
         mongoName = result.parameters.fields['name']['stringValue']
         mongoCantidad = result.parameters.fields['number']['numberValue']
-        // mongoCategoria = result.parameters.fields['categoria']['stringValue']
+      
         mongoProducto = result.parameters.fields['producto']['stringValue']
         mongoUnidad = result.parameters.fields['unidad']['stringValue']
         mongoNumero = req.body.WaId;
@@ -217,7 +217,18 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
       }
       else if (intentName === "tipo categoria") {
-        twiml.message(`La categoria seleccionada fue: 
+        twiml.message(`Escribi una de las siguientes categorias para la encomienda:
+        No fragil
+        Fragil
+        Muy fragil 
+        `);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+      } 
+      else if (intentName === "Definir categoria") {
+
+        mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        twiml.message(`La categoria seleccionada para la encomienda ${mongoNumero} es ${mongoCategoria}
         `);
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
@@ -239,7 +250,24 @@ Escribi la opción que sea de tu interes:
 
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
-      }  else if (intentName === "Definir Estado") {
+      }
+        else if (intentName === "Solicitar estado") {
+          twiml.message(`Escribi el estado en el que se encuentra la encomienda de acuerdo a las siguientes opciones:
+          Pendiente
+          Recibido
+          En proceso
+          Extraviado
+          Entregado
+          `);
+
+          mongoEstado = result.parameters.fields['estado']['stringValue']
+          res.writeHead(200, { "Content-Type": "text/xml" });
+          res.end(twiml.toString());
+        } 
+      
+      else if (intentName === "Definir Estado") {
+        
+        
 
         if(mongoEstado === 'pendiente'){
           mongoEstado = 0
