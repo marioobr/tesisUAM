@@ -120,11 +120,11 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
 
       }else if (intentName === "Mostrar encomienda cliente") {
-        mongoName = result.parameters.fields['name']['stringValue']
-        mongoCantidad = result.parameters.fields['number']['numberValue']
-        // mongoCategoria = result.parameters.fields['categoria']['stringValue']
-        mongoProducto = result.parameters.fields['producto']['stringValue']
-        mongoUnidad = result.parameters.fields['unidad']['stringValue']
+        mongoName = customerName
+        // mongoCantidad = result.parameters.fields['number']['numberValue']
+        // // mongoCategoria = result.parameters.fields['categoria']['stringValue']
+        // mongoProducto = result.parameters.fields['producto']['stringValue']
+        // mongoUnidad = result.parameters.fields['unidad']['stringValue']
         mongoNumero = req.body.WaId;
         mostraractivo({numero: mongoNumero}).then((encomiendas) => {
           console.log('Encomiendas', encomiendas)
