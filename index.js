@@ -122,7 +122,7 @@ Escribi la opción que sea de tu interes:
       }else if (intentName === "Mostrar encomienda cliente") {
         mongoNumero = req.body.WaId;
         mostraractivo({numero: mongoNumero}).then((encomiendas) => {
-          console.log('Encomiendas', encomiendas.body)
+          console.log('Encomiendas', encomiendas)
           twiml.message(`
         La informacion de tu encomieneda es la siguiente: `);     
         res.writeHead(200, { "Content-Type": "text/xml" });
