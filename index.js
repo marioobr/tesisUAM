@@ -122,7 +122,7 @@ Escribi la opción que sea de tu interes:
       }else if (intentName === "Mostrar encomienda cliente") {
 
         mongoNumero = req.body.WaId;
-        mostraractivo({estado: {$gt:0, $lt: 2}, numero: mongoNumero}).then((encomiendas) => {
+        mostraractivo({estado: {$lt:2},numero: '50583731668'}).then((encomiendas) => {
           console.log('Encomiendas', encomiendas)
 
           var message = '';
