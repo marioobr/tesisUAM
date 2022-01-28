@@ -120,11 +120,36 @@ Escribi la opción que sea de tu interes:
         res.end(twiml.toString());
 
       }else if (intentName === "Mostrar encomienda cliente") {
-        mongoName = customerName
-        // mongoCantidad = result.parameters.fields['number']['numberValue']
-        // // mongoCategoria = result.parameters.fields['categoria']['stringValue']
-        // mongoProducto = result.parameters.fields['producto']['stringValue']
-        // mongoUnidad = result.parameters.fields['unidad']['stringValue']
+
+        mongoNumero = req.body.WaId;
+        mostraractivo({estado: {$gt:0, $lt: 2}}).then((encomiendas) => {
+          console.log('Encomiendas', encomiendas)
+
+          var message = '';
+
+          encomiendas.forEach((encomienda)=>{
+            const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
+            const msg = `
+            Tus encomiendas activas son:
+            nombre: ${nombre}
+            cantidad: ${cantidad}
+            producto: ${producto}
+            categoria: ${categoria}
+            numero: ${numero}
+            unidad: ${unidad}
+            estado: ${estado}
+            `
+            message += msg
+          })
+          twiml.message(message);     
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.end(twiml.toString());
+
+        })
+        
+
+      }
+      else if (intentName === "Mostrar todas encomiendas") {
         mongoNumero = req.body.WaId;
         mostraractivo({numero: mongoNumero}).then((encomiendas) => {
           console.log('Encomiendas', encomiendas)
@@ -134,6 +159,7 @@ Escribi la opción que sea de tu interes:
           encomiendas.forEach((encomienda)=>{
             const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
             const msg = `
+            Tu historial de encomiendas es: 
             nombre: ${nombre}
             cantidad: ${cantidad}
             producto: ${producto}
