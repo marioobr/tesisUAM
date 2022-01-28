@@ -123,8 +123,22 @@ Escribi la opción que sea de tu interes:
         mongoNumero = req.body.WaId;
         mostraractivo({numero: mongoNumero}).then((encomiendas) => {
           console.log('Encomiendas', encomiendas)
-          twiml.message(`
-        La informacion de tu encomieneda es la siguiente: `);     
+
+          var message = '';
+
+          encomiendas.forEach((encomienda)=>{
+            const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
+            const msg = `
+            nombre: ${mongoName}
+            cantidad: ${mongoCantidad}
+            producto: ${mongoProducto}
+            categoria: ${mongoCategoria}
+            numero: ${mongoNumero}
+            unidad: ${mongoUnidad}
+            `
+            message += msg
+          })
+          twiml.message(message);     
         res.writeHead(200, { "Content-Type": "text/xml" });
         res.end(twiml.toString());
 
