@@ -134,12 +134,13 @@ Escribi la opción que sea de tu interes:
           encomiendas.forEach((encomienda)=>{
             const {nombre, cantidad, producto, categoria, numero,estado,unidad} = encomienda
             const msg = `
-            nombre: ${mongoName}
-            cantidad: ${mongoCantidad}
-            producto: ${mongoProducto}
-            categoria: ${mongoCategoria}
-            numero: ${mongoNumero}
-            unidad: ${mongoUnidad}
+            nombre: ${nombre}
+            cantidad: ${cantidad}
+            producto: ${producto}
+            categoria: ${categoria}
+            numero: ${numero}
+            unidad: ${unidad}
+            estado: ${estado}
             `
             message += msg
           })
